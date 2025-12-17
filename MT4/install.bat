@@ -26,19 +26,17 @@ for /d %%F in ("%base%\*") do (
     rem skip
     ) else if /I "!foldername!"=="Help" (
     rem skip
-    ) else (
+  )
+  else if exist "%%F\MQL4" (
     if exist "%%F\origin.txt" (
       echo +-------------------------- [Instance !index!] --------------------------+
       type "%%F\origin.txt"
       echo.
       echo +------------------------------------------------------------------+
-      ) else (
-      echo origin.txt khong ton tai
     )
-    echo.
-    
-    
   )
+  echo.
+  
 )
 
 if !index!==0 (
@@ -104,15 +102,12 @@ copy /y "%botFile%" "!targetExperts!" >nul
 echo Da copy bot thanh cong toi: "!targetExperts!"
 echo.
 
-
-
-
-echo === Config === 
+echo === Config ===
 set "sourceFile=setup\experts.ini"
 if not exist "!sourceFile!" (
-    echo [LOI] Khong tim thay file config: "!sourceFile!" !
-    pause
-    exit /b
+  echo [LOI] Khong tim thay file config: "!sourceFile!" !
+  pause
+  exit /b
 )
 
 rem Dùng biến !selected! để xác định thư mục đích
@@ -120,20 +115,19 @@ set "targetConfig=!selected!\config"
 
 rem Tao thu muc config neu chua ton tai
 if not exist "!targetConfig!" (
-    md "!targetConfig!"
+  md "!targetConfig!"
 )
 
 rem Xoa file experts.ini cu
 set "fileToDelete=experts.ini"
 if exist "!targetConfig!\!fileToDelete!" (
-    del /f /q "!targetConfig!\!fileToDelete!"
+  del /f /q "!targetConfig!\!fileToDelete!"
 )
 
 rem Copy file experts.ini moi
 if exist "!sourceFile!" (
-    copy /y "!sourceFile!" "!targetConfig!\" >nul
+  copy /y "!sourceFile!" "!targetConfig!\" >nul
 )
-
 
 :: ==============================
 
